@@ -38,7 +38,7 @@ export default function ProductDetails({product} : ProductDetailsProps){
 
                     <fetcher.Form method='POST'>
                         <button
-                            type='button'
+                            type='submit'
                             name='id'
                             value={product.id}
                             className={`${isAvailable ? 'text-black' : 'text-red-600'} rounded-lg p-2 text-xs uppercase font-bold w-full border border-black-100 hover:cursor-pointer`}
