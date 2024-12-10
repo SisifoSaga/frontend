@@ -14,7 +14,7 @@ export async function addProduct(data: ProductData) {
             price: +data.price,
         });
         if (result.success) {
-            const url = ${import.meta.env.VITE_API_URL}/api/products;
+            const url = `${import.meta.env.VITE_API_URL}/api/products`; // Corregido
             await axios.post(url, {
                 name: result.output.name,
                 price: result.output.price,
@@ -29,7 +29,7 @@ export async function addProduct(data: ProductData) {
 
 export async function getProducts() {
     try {
-        const url = ${import.meta.env.VITE_API_URL}/api/products;
+        const url = `${import.meta.env.VITE_API_URL}/api/products`; // Corregido
         const { data } = await axios(url);
 
         // Valida los datos con el esquema
@@ -47,10 +47,9 @@ export async function getProducts() {
     }
 }
 
-
 export async function getProductById(id: Product["id"]) {
     try {
-        const url = ${import.meta.env.VITE_API_URL}/api/products/${id};
+        const url = `${import.meta.env.VITE_API_URL}/api/products/${id}`; // Corregido
         const { data } = await axios(url);
         const result = safeParse(ProductSchema, data.data);
         if (result.success) {
@@ -74,7 +73,7 @@ export async function updateProduct(data: ProductData, id: Product["id"]) {
         });
 
         if (result.success) {
-            const url = ${import.meta.env.VITE_API_URL}/api/products/${id};
+            const url = `${import.meta.env.VITE_API_URL}/api/products/${id}`; // Corregido
             await axios.put(url, result.output);
         }
     } catch (error) {
@@ -84,7 +83,7 @@ export async function updateProduct(data: ProductData, id: Product["id"]) {
 
 export async function deleteProduct(id: Product["id"]) {
     try {
-        const url = ${import.meta.env.VITE_API_URL}/api/products/${id};
+        const url = `${import.meta.env.VITE_API_URL}/api/products/${id}`; // Corregido
         await axios.delete(url);
     } catch (error) {
         console.error("Error al eliminar producto:", error);
@@ -93,17 +92,16 @@ export async function deleteProduct(id: Product["id"]) {
 
 export async function updateProductAvailability(id: Product["id"]) {
     try {
-        const url = ${import.meta.env.VITE_API_URL}/api/products/${id};
+        const url = `${import.meta.env.VITE_API_URL}/api/products/${id}`; // Corregido
         await axios.patch(url);
     } catch (error) {
         console.error("Error al actualizar disponibilidad:", error);
     }
 }
 
-
 export async function searchProducts(query: string) {
     try {
-        const url = ${import.meta.env.VITE_API_URL}/api/products?search=${query};
+        const url = `${import.meta.env.VITE_API_URL}/api/products?search=${query}`; // Corregido
         const { data } = await axios.get(url);
         const result = safeParse(ProductsSchema, data.data);
         if (result.success) {
