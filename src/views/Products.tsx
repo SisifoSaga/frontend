@@ -1,40 +1,43 @@
-import {ActionFunctionArgs, Link, useLoaderData} from "react-router-dom"
-import { getProducts, updateProductAvailability } from "../services/ProductService"
-import ProductDetails from "../components/ProductDetails";
-import { Product } from "../types";
-
+import {ActionFunctionArgs, Link, useLoaderData} from 'react-router-dom'
+import { getProducts, updateProductAvailability } from '../services/ProductService'
+import { Product } from '../types'
+import ProductDetails from '../components/ProductDetails'
 
 export async function loader() {
-    const products = await getProducts()
-
-    return products
+    try {
+        const products = await getProducts();
+        return products;
+    } catch (error) {
+        console.error(error);
+        return []; // Devuelve un array vacío en caso de error
+    }
 }
 
-export async function action({request} : ActionFunctionArgs) {
+
+export async function action({request} : ActionFunctionArgs){
     const data = Object.fromEntries(await request.formData())
     await updateProductAvailability(+data.id)
     return {}
 }
 
-export default function Products(){
+
+export default function Products() {
 
     const products = useLoaderData() as Product[]
 
-
-    return(
+    return (
         <>
-        <div className="flex justify-between">
-            <h2 className="text-4xl font-black text-slate-500">Productos</h2>
-            <Link
-                to="productos/nuevo"
-                className="rounded-md bg-indigo-600 p-3 text-sm font-bold text-white shadow-sm hover:bg-indigo-500"
-            >
-                Agregar Producto
-            </Link>
-        </div>
+            <div className='flex justify-between'>
+                <h2 className='text-4xl font-black text-slate-500'>Productos</h2>
+                <Link
+                    to="productos/nuevo"
+                    className='rounded-md bg-indigo-600 p-3 text-sm font-bold text-white shadow-sm hover:bg-indigo-500'
+                >
+                    Agregar Producto
+                </Link>
+            </div>
 
-
-        <div className="p-2">
+            <div className="p-2">
   <table className="w-full mt-5 table-auto">
     <thead className="bg-slate-800 text-white">
         <tr>
@@ -45,17 +48,16 @@ export default function Products(){
         </tr>
     </thead>
     <tbody>
-
         {products.map(product => (
             <ProductDetails
                 key={product.id}
                 product={product}
             />
         ))}
-
     </tbody>
   </table>
 </div>
+
         </>
     )
 }
